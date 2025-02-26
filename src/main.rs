@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use cortex_m_rt::{entry, exception, ExceptionFrame};
+use cortex_m_rt::{entry, exception, pre_init, ExceptionFrame};
 
 #[panic_handler]
 unsafe fn panic_handler(_x: &core::panic::PanicInfo) -> ! {
@@ -27,6 +27,12 @@ unsafe fn BusFault() {
 unsafe fn UsageFault() {
     loop {}
 }
+
+// Uncomment the following for another workaround of this bug.
+/*#[pre_init]
+unsafe fn clear_unalign_trp() {
+    *(0xE000ED14 as *mut u32) = 0x200;
+}*/
 
 #[derive(Default)]
 pub struct Config {

@@ -16,7 +16,8 @@ block (SCB). In my test, the register contains the following values:
 * SRM32F401RE: 0x200, i.e. STKALIGN
 
 The rustc flag `+strict-align` works around this bug but generates a
-`unknown and unstable feature specified` warning.
+`unknown and unstable feature specified` warning. Alternatively, this bug can also be worked around
+by clearing the UNALIGN\_TRP bit in CCR in pre\_init phase.
 
 For reference, the generated assembly for all four variants (targets and strict-align) can be
 found in the `.lss` files.
