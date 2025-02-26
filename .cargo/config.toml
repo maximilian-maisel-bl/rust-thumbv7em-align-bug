@@ -1,0 +1,12 @@
+[build]
+target = "thumbv7em-none-eabi"
+
+[target.thumbv7em-none-eabi]
+# This fixes the alignment issue
+rustflags = ["-C", "target-feature=+strict-align"]
+
+[profile.release]
+debug = true
+
+[profile.debug]
+opt-level = "s"

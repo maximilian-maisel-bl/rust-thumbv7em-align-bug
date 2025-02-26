@@ -1,0 +1,86 @@
+
+target/thumbv7em-none-eabi/release/rust-thumbv7em-align-bug:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+08000400 <Reset>:
+ 8000400:	f000 f83e 	bl	8000480 <DefaultPreInit>
+ 8000404:	4808      	ldr	r0, [pc, #32]	@ (8000428 <Reset+0x28>)
+ 8000406:	4909      	ldr	r1, [pc, #36]	@ (800042c <Reset+0x2c>)
+ 8000408:	2200      	movs	r2, #0
+ 800040a:	4281      	cmp	r1, r0
+ 800040c:	d001      	beq.n	8000412 <Reset+0x12>
+ 800040e:	c004      	stmia	r0!, {r2}
+ 8000410:	e7fb      	b.n	800040a <Reset+0xa>
+ 8000412:	4807      	ldr	r0, [pc, #28]	@ (8000430 <Reset+0x30>)
+ 8000414:	4907      	ldr	r1, [pc, #28]	@ (8000434 <Reset+0x34>)
+ 8000416:	4a08      	ldr	r2, [pc, #32]	@ (8000438 <Reset+0x38>)
+ 8000418:	4281      	cmp	r1, r0
+ 800041a:	d002      	beq.n	8000422 <Reset+0x22>
+ 800041c:	ca08      	ldmia	r2!, {r3}
+ 800041e:	c008      	stmia	r0!, {r3}
+ 8000420:	e7fa      	b.n	8000418 <Reset+0x18>
+ 8000422:	f000 f80e 	bl	8000442 <main>
+ 8000426:	de00      	udf	#0
+ 8000428:	20000000 	.word	0x20000000
+ 800042c:	20000000 	.word	0x20000000
+ 8000430:	20000000 	.word	0x20000000
+ 8000434:	20000000 	.word	0x20000000
+ 8000438:	080004a4 	.word	0x080004a4
+
+0800043c <BusFault>:
+ 800043c:	b580      	push	{r7, lr}
+ 800043e:	466f      	mov	r7, sp
+ 8000440:	e7fe      	b.n	8000440 <BusFault+0x4>
+
+08000442 <main>:
+ 8000442:	b580      	push	{r7, lr}
+ 8000444:	466f      	mov	r7, sp
+ 8000446:	f000 f800 	bl	800044a <_ZN24rust_thumbv7em_align_bug18__cortex_m_rt_main17hdc8000098ab4762fE>
+
+0800044a <_ZN24rust_thumbv7em_align_bug18__cortex_m_rt_main17hdc8000098ab4762fE>:
+ 800044a:	b580      	push	{r7, lr}
+ 800044c:	466f      	mov	r7, sp
+ 800044e:	b084      	sub	sp, #16
+ 8000450:	2000      	movs	r0, #0
+ // Store instructions are aligned.
+ 8000452:	f88d 0006 	strb.w	r0, [sp, #6]
+ 8000456:	f8ad 0004 	strh.w	r0, [sp, #4]
+ 800045a:	9000      	str	r0, [sp, #0]
+ 800045c:	4668      	mov	r0, sp
+ 800045e:	9002      	str	r0, [sp, #8]
+ 8000460:	a802      	add	r0, sp, #8
+ 8000462:	f89d 0006 	ldrb.w	r0, [sp, #6]
+ 8000466:	f88d 000e 	strb.w	r0, [sp, #14]
+ 800046a:	f8bd 0004 	ldrh.w	r0, [sp, #4]
+ 800046e:	f8ad 000c 	strh.w	r0, [sp, #12]
+ 8000472:	9800      	ldr	r0, [sp, #0]
+ 8000474:	9002      	str	r0, [sp, #8]
+ 8000476:	a802      	add	r0, sp, #8
+ 8000478:	e7fe      	b.n	8000478 <_ZN24rust_thumbv7em_align_bug18__cortex_m_rt_main17hdc8000098ab4762fE+0x2e>
+
+0800047a <DefaultHandler_>:
+ 800047a:	b580      	push	{r7, lr}
+ 800047c:	466f      	mov	r7, sp
+ 800047e:	e7fe      	b.n	800047e <DefaultHandler_+0x4>
+
+08000480 <DefaultPreInit>:
+ 8000480:	b580      	push	{r7, lr}
+ 8000482:	466f      	mov	r7, sp
+ 8000484:	bd80      	pop	{r7, pc}
+
+08000486 <HardFaultTrampoline>:
+ 8000486:	4670      	mov	r0, lr
+ 8000488:	2104      	movs	r1, #4
+ 800048a:	4208      	tst	r0, r1
+ 800048c:	d103      	bne.n	8000496 <HardFaultTrampoline+0x10>
+ 800048e:	f3ef 8008 	mrs	r0, MSP
+ 8000492:	f000 b804 	b.w	800049e <HardFault>
+ 8000496:	f3ef 8009 	mrs	r0, PSP
+ 800049a:	f000 b800 	b.w	800049e <HardFault>
+
+0800049e <HardFault>:
+ 800049e:	b580      	push	{r7, lr}
+ 80004a0:	466f      	mov	r7, sp
+ 80004a2:	e7fe      	b.n	80004a2 <HardFault+0x4>
